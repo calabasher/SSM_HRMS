@@ -16,6 +16,10 @@
     <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <%
+    String base=request.getContextPath();
+    System.out.println(base);
+    %>
 </head>
 <body>
 <div class="container">
@@ -47,15 +51,16 @@
 
 <script type="text/javascript">
 
+	
     $(function () {
         $("#login_btn").click(function () {
             $.ajax({
-                url:"/hrms/dologin",
+                url:"<%=request.getContextPath()%>/hrms/dologin",
                 type:"POST",
                 data:$("#login_form").serialize(),
                 success:function (result) {
                     if(result.code == 100){
-                        window.location.href= "/hrms/main";
+                        window.location.href= "<%=request.getContextPath()%>/hrms/main";
                     }else {
                         alert(result.extendInfo.login_error);
                     }

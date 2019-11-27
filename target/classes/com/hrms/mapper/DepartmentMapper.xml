@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- mapper 为根元素节点， 一个namespace对应一个dao
+	   映射文件是以<mapper>作为根节点，在根节点中支持9个元素，分别为insert、update、delete、select（增删改查）;
+	 cache、cache-ref、resultMap、parameterMap、sql。
+-->
 <mapper namespace="com.hrms.mapper.DepartmentMapper">
     <sql id="table_name">
         tbl_dept
@@ -8,12 +12,27 @@
     <sql id="select_fields">
         dept_id , dept_name, dept_leader
     </sql>
+    <!-- 
+       resultMap	是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象
+	　　1. type 对应的返回类型，可以是javabean, 也可以是其它
+	　　2. id 必须唯一， 用于标示这个resultMap的唯一性，在使用resultMap的时候，就是通过id引用
+	　　3. extends 继承其他resultMap标签
+	   type 返参类型
+	-->
     <resultMap id="deptResult" type="com.hrms.bean.Department">
+    	<!-- 
+		　　1. id 唯一性，注意啦，这个id用于标示这个javabean对象的唯一性， 不一定会是数据库的主键（不要把它理解为数据库对应表的主键）
+		　　2. property 属性对应javabean的属性名
+		　　3. column 对应数据库表的列名
+		       （这样，当javabean的属性与数据库对应表的列名不一致的时候，就能通过指定这个保持正常映射了）
+		-->
         <id column="dept_id" property="deptId"></id>
+        <!-- result 与id相比，对应普通属性 --> 
         <result column="dept_name" property="deptName"></result>
         <result column="dept_leader" property="deptLeader"></result>
     </resultMap>
-
+	
+	<!-- as 别名 -->
     <select id="selectDeptsByLimitAndOffset" resultMap="deptResult">
         SELECT
         dept_id as 'deptId', dept_name as 'deptName', dept_leader as 'deptLeader'
@@ -21,7 +40,11 @@
         <include refid="table_name"></include>
         LIMIT #{offset}, #{limit}
     </select>
-
+	
+	<!-- 2. parameterType 参数类型，入参
+		（可选配置, 默认为mybatis自动选择处理） 将要传入语句的参数的完全限定类名或别名， 
+		如果不配置，mybatis会通过ParameterHandler 根据参数类型默认选择合适的typeHandler进行处理
+        parameterType 主要指定参数类型，可以是int, short, long, string等类型，也可以是复杂类型（如对象） -->
     <update id="updateDeptById" parameterType="com.hrms.bean.Department">
         UPDATE
         <include refid="table_name"></include>

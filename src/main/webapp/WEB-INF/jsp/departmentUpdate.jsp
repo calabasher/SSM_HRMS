@@ -46,11 +46,10 @@
 
     $(".dept_edit_btn").click(function () {
         edit_deptId = $(this).parent().parent().find("td:eq(0)").text();
-        alert("id"+edit_deptId);
         //查询对应deptId的部门信息
         $.ajax({
-            url:"/hrms/dept/getDeptById/"+edit_deptId,
-            type:"GET",
+            url: "<%=request.getContextPath()%>/hrms/dept/getDeptById/"+edit_deptId,
+            type: "GET",
             success:function (result) {
                 if (result.code == 100){
                     var deptData = result.extendInfo.department;
@@ -66,13 +65,13 @@
 
     $(".dept_update_btn").click(function () {
         $.ajax({
-            url:"/hrms/dept/updateDept/"+edit_deptId,
+            url:"<%=request.getContextPath()%>/hrms/dept/updateDept/"+edit_deptId,
             type:"PUT",
             data:$(".update_dept_form").serialize(),
             success:function (result) {
                 if(result.code == 100){
                     alert("更新成功！");
-                    window.location.href = "/hrms/dept/getDeptList?pageNo="+curPageNo;
+                    window.location.href = "<%=request.getContextPath()%>/hrms/dept/getDeptList?pageNo="+curPageNo;
                 } else {
                     alert(result.extendInfo.update_dept_error);
                 }

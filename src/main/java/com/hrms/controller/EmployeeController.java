@@ -63,11 +63,11 @@ public class EmployeeController {
     @RequestMapping(value = "/checkEmpExists", method = RequestMethod.GET)
     @ResponseBody
     public JsonMsg checkEmpExists(@RequestParam("empName") String empName){
-        //对输入的姓名与邮箱格式进行验证
-        String regName = "(^[a-zA-Z0-9_-]{3,16}$)|(^[\\u2E80-\\u9FFF]{2,5})";
-        if(!empName.matches(regName)){
-            return JsonMsg.fail().addInfo("name_reg_error", "输入姓名为2-5位中文或6-16位英文和数字组合");
-        }
+        //用户名正则，4到16位（字母，数字，下划线，减号）
+//        String regName = "/^[a-zA-Z0-9_-]{4,16}$/";
+//        if(!empName.matches(regName)){
+//            return JsonMsg.fail().addInfo("name_reg_error", "输入姓名为2-5位中文或6-16位英文和数字组合");
+//        }
         Employee employee = employeeService.getEmpByName(empName);
         if (employee != null){
             return JsonMsg.fail().addInfo("name_reg_error", "用户名重复");
@@ -152,9 +152,4 @@ public class EmployeeController {
                 .addObject("curPage", curPage);
         return mv;
     }
-
-
-
-
-
 }

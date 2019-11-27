@@ -25,17 +25,32 @@
             </ul>
         </li>
     </ul>
-
+	<ul class="nav nav-pills nav-stacked dept_sidebar">
+        <li role="presentation" class="active">
+            <a href="#"  data-toggle="collapse" data-target="#collapse_task">
+                <span class="glyphicon glyphicon-cloud" aria-hidden="true">任务管理</span>
+            </a>
+            <ul class="nav nav-pills nav-stacked" id="collapse_task">
+                <li role="presentation"><a href="#" class="task_info">任务信息</a></li>
+                <li role="presentation"><a href="#" class="task_add_btn" data-toggle="modal" data-target=".task-add-modal">任务新增</a></li>
+                <li role="presentation"><a href="#" class="task_clearall_btn">任务清零</a></li>
+            </ul>
+        </li>
+    </ul>
 </div><!-- /.panel-group，#hrms_sidebar_left -->
 
 <script type="text/javascript">
     //跳转到员工页面
     $(".emp_info").click(function () {
-        $(this).attr("href", "/hrms/emp/getEmpList");
+        $(this).attr("href", "<%=request.getContextPath()%>/hrms/emp/getEmpList");
     });
     //跳转到部门页面
     $(".dept_info").click(function () {
-        $(this).attr("href", "/hrms/dept/getDeptList");
+        $(this).attr("href", "<%=request.getContextPath()%>/hrms/dept/getDeptList");
+    });
+  	//跳转到任务页面
+    $(".task_info").click(function () {
+        $(this).attr("href", "<%=request.getContextPath()%>/hrms/task/getTaskList");
     });
     //员工清零这个功能暂未实现
     $(".emp_clearall_btn").click(function () {

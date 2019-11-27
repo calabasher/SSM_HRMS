@@ -39,6 +39,10 @@ public interface EmployeeMapper {
      * =================================查询============================================
      */
     Employee selectOneById(@Param("empId") int empId);
+    
+    
+    
+    
     Employee selectOneByName(@Param("empName") String empName);
     //查询带有部门信息的Employee
     Employee selectWithDeptById(@Param("empId") Integer empId);

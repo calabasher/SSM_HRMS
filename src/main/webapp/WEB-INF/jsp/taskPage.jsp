@@ -2,48 +2,52 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>员工管理页面</title>
+    <title>任务管理页面</title>
 </head>
 <body>
 <div class="hrms_container">
     <!-- 导航条 -->
     <%@ include file="./commom/head.jsp"%>
 
-    <!-- 中间部分（包括左边栏和员工/部门表单显示部分） -->
+    <!-- 中间部分（包括左边栏和任务/部门表单显示部分） -->
     <div class="hrms_body" style="position:relative; top:-15px;">
 
         <!-- 左侧栏 -->
         <%@ include file="./commom/leftsidebar.jsp"%>
 
-        <!-- 中间员工表格信息展示内容 -->
+        <!-- 中间任务表格信息展示内容 -->
         <div class="emp_info col-sm-10">
 
             <div class="panel panel-success">
                 <!-- 路径导航 -->
                 <div class="panel-heading">
                     <ol class="breadcrumb">
-                        <li><a href="#">员工管理</a></li>
-                        <li class="active">员工信息</li>
+                        <li><a href="#">任务管理</a></li>
+                        <li class="active">任务信息</li>
                     </ol>
                 </div>
                 <!-- Table -->
                 <table class="table table-bordered table-hover" id="emp_table">
                     <thead>
-                    <th>员工编号</th>
-                    <th>员工姓名</th>
-                    <th>邮箱</th>
-                    <th>性别</th>
-                    <th>部门</th>
+                    <th>任务编号</th>
+                    <th>任务名称</th>
+                    <th>施工者</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>备注</th>
                     <th>操作</th>
                     </thead>
                     <tbody>
-                        <c:forEach items="${employees}" var="emp">
+                        <c:forEach items="${tasks}" var="item">
                             <tr>
-                                <td>${emp.empId}</td>
-                                <td>${emp.empName}</td>
-                                <td>${emp.empEmail}</td>
-                                <td>${emp.gender == "F"? "女": "男"}</td>
-                                <td>${emp.department.deptName}</td>
+                                <td>${item.taskId}</td>
+                                <td>${item.taskName}</td>
+                                <td>${item.employee.empName}</td>
+                                <td>${item.createtime}</td>
+                                <td>${item.updatetime}</td>
+                                <!-- '0:已完成 1：进行中 2：已超时' -->
+                                <td>${item.status == 0 ? "已完成" :  " 进行"}</td>
+                                <td>${item.remarks}</td>
                                 <td>
                                     <a href="#" role="button" class="btn btn-primary emp_edit_btn" data-toggle="modal" data-target=".emp-update-modal">编辑</a>
                                     <a href="#" role="button" class="btn btn-danger emp_delete_btn">删除</a>
@@ -59,7 +63,7 @@
                     </div>
                     <nav aria-label="Page navigation" class="pull-right">
                         <ul class="pagination">
-                            <li><a href="<%=request.getContextPath()%>/hrms/emp/getEmpList?pageNo=1">首页</a></li>
+                            <li><a href="/hrms/emp/getEmpList?pageNo=1">首页</a></li>
                             <c:if test="${curPage==1}">
                                 <li class="disabled">
                                     <a href="#" aria-label="Previous" class="prePage">
@@ -77,10 +81,10 @@
 
                             <c:forEach begin="1" end="${totalPages<5?totalPages:5}" step="1" var="itemPage">
                                 <c:if test="${curPage == itemPage}">
-                                    <li class="active"><a href="<%=request.getContextPath()%>/hrms/emp/getEmpList?pageNo=${itemPage}">${itemPage}</a></li>
+                                    <li class="active"><a href="/hrms/emp/getEmpList?pageNo=${itemPage}">${itemPage}</a></li>
                                 </c:if>
                                 <c:if test="${curPage != itemPage}">
-                                    <li><a href="<%=request.getContextPath()%>/hrms/emp/getEmpList?pageNo=${itemPage}">${itemPage}</a></li>
+                                    <li><a href="/hrms/emp/getEmpList?pageNo=${itemPage}">${itemPage}</a></li>
                                 </c:if>
                             </c:forEach>
 
@@ -98,7 +102,7 @@
                                     </a>
                                 </li>
                             </c:if>
-                            <li><a href="<%=request.getContextPath()%>/hrms/emp/getEmpList?pageNo=${totalPages}">尾页</a></li>
+                            <li><a href="/hrms/emp/getEmpList?pageNo=${totalPages}">尾页</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -122,19 +126,19 @@
         $(".prePage").click(function () {
             if (curPage > 1){
                 var pageNo = curPage-1;
-                $(this).attr("href", "<%=request.getContextPath()%>/hrms/emp/getEmpList?pageNo="+pageNo);
+                $(this).attr("href", "/hrms/emp/getEmpList?pageNo="+pageNo);
             }
         });
         //下一页
         $(".nextPage").click(function () {
             if (curPage < totalPages){
                 var pageNo = curPage+1;
-                $(this).attr("href", "<%=request.getContextPath()%>/hrms/emp/getEmpList?pageNo="+pageNo);
+                $(this).attr("href", "/hrms/emp/getEmpList?pageNo="+pageNo);
             }
         });
     })
 
-	// 员工删除操作
+	// 任务删除操作
     $(".emp_delete_btn").click(function () {
         var curPage = ${curPage};
         var delEmpId = $(this).parent().parent().find("td:eq(0)").text();
@@ -154,8 +158,6 @@
             });
         }
     });
-
-
 </script>
 </body>
 </html>

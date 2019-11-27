@@ -64,11 +64,11 @@
 <script type="text/javascript">
     //主页面
     $("#company_logo").click(function () {
-        $(this).attr("href", "/hrms/main");
+        $(this).attr("href", "/SSM_HRMS/hrms/main");
     });
     //账号退出
     $(".hrms_logout").click(function () {
-        window.location.href = "/hrms/logout";
+        window.location.href = "/SSM_HRMS/hrms/logout";
     });
 </script>
 </body>

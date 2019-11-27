@@ -16,13 +16,14 @@
         <result column="emp_email" property="empEmail"></result>
         <result column="gender" property="gender"></result>
         <result column="department_id" property="departmentId"></result>
+		<!-- 在项目中，某些实体类之间肯定有关键关系，比如一对一，一对多等。association: 一对一关联(has one) collection:一对多关联(has many) -->
         <association property="department" column="department_id" javaType="com.hrms.bean.Department">
             <id column="dept_id" property="deptId"></id>
             <result column="dept_leader" property="deptLeader"></result>
             <result column="dept_name" property="deptName"></result>
         </association>
     </resultMap>
-
+	<!--resultType 指定返回值类型-->
     <select id="selectOneById" parameterType="java.lang.Integer" resultType="com.hrms.bean.Employee">
         SELECT
         emp_id empId, emp_name empName, emp_email empEmail, gender, department_id departmentId
@@ -41,7 +42,7 @@
         emp_name = #{empName}
     </select>
 
-    <select id="selectWithDeptById" parameterType="Integer"  resultMap="withDeptResultMap">
+    <select id="selectWithDeptById" parameterType="Integer" resultMap="withDeptResultMap">
         SELECT
         <include refid="select_withdept_fields"/>
         FROM

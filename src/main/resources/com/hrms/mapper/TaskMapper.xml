@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrms.mapper.TaskMapper">
+	<sql id="table_name">tbl_task</sql>
+	<sql id="select_fields">task_id, task_name, emp_id, createtime, updatetime, status, remarks</sql>
+	<sql id="select_with_emp_fields">
+		task_id, task_name, t.emp_id, createtime, updatetime, status, remarks, e.emp_id, emp_name
+	</sql>
+	<resultMap id="withEmpResultMap" type="com.hrms.bean.Task">
+		<id column="task_id" property="taskId"></id>
+		<result column="task_name" property="taskName"></result>
+		<result column="createtime" property="createtime"></result>
+		<result column="updatetime" property="updatetime"></result>
+		<result column="status" property="status"></result>
+		<result column="remarks" property="remarks"></result>
+		<association property="employee" javaType="com.hrms.bean.Employee">
+			<id column="emp_id" property="empId"></id>
+			<result column="emp_name" property="empName"></result>
+			<result column="emp_email" property="empMail"></result>
+		</association>
+	</resultMap>
+	<!-- 分页查询 -->
+	<select id="selectTaskByLimitAndOffset" resultMap="withEmpResultMap">
+		SELECT
+		<include refid="select_with_emp_fields"></include>
+		FROM
+        tbl_task t
+        LEFT JOIN
+        tbl_emp e
+        ON
+        t.emp_id = e.emp_id
+        ORDER BY t.emp_id
+        LIMIT #{offset}, #{limit}
+	</select>
+	<!-- 查询单个任务 通过id-->
+	<select id="selectTaskById" parameterType="java.lang.Integer" resultType="com.hrms.bean.Task">
+		SELECT
+		task_id as 'taskId', task_name as 'taskName', emp_id as 'emp_id', createtime, updatetime, status, remarks
+		FROM
+		<include refid="table_name"/>
+        WHERE
+        task_id = #{taskId}
+	</select>
+	<!-- 查询单个任务 通过名称 -->
+	<select id="selectTaskByName" parameterType="String" resultType="com.hrms.bean.Task">
+		SELECT
+		task_id as 'taskId', task_name as 'taskName', emp_id as 'emp_id', createtime, updatetime, status, remarks
+		FROM
+		<include refid="table_name"/>
+        WHERE
+        task_name = #{taskName}
+	</select>
+	<update id="updateTaskById" parameterType="com.hrms.bean.Task">
+		UPDATE
+		<include refid="table_name"></include>
+		SET
+		task_name = #{taskName, jdbcType = VARCHAR},
+		emp_id = #{empId, jdbcType = INTEGER},
+		createtime = #{createtime, jdbcType = DATE},
+		updatetime = #{updatetime, jdbcType = DATE},
+		status = #{updatetime, jdbcType = INTEGER},
+		remarks = #{updatetime, jdbcType = VARCHAR}
+		WHERE
+		task_id = #{taskId}
+	</update>
+</mapper>

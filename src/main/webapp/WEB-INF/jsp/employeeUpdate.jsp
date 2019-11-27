@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <label  for="update_static_empName" class="col-sm-2 control-label">姓名</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static" id="update_static_empName"></p>
+                        	<input type="text" name="empName" class="form-control" id="update_static_empName" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -30,10 +30,10 @@
                         <label class="col-sm-2 control-label">性别</label>
                         <div class="col-sm-8">
                             <label class="radio-inline">
-                                <input type="radio" name="gender" id="update_empGender1" value="M"> 男
+                                <input type="radio" name="gender" id="update_empGender1" value="0"> 男
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="gender" id="update_empGender2" value="F"> 女
+                                <input type="radio" name="gender" id="update_empGender2" value="1"> 女
                             </label>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
 
         //2 根据id或name查询出对应员工信息进行回显；
         $.ajax({
-            url:"/hrms/emp/getEmpById/"+updateEmpId,
+            url:"<%=request.getContextPath()%>/hrms/emp/getEmpById/"+updateEmpId,
             type:"GET",
             success:function (result) {
                 if (result.code == 100){
@@ -84,7 +84,7 @@
 
         //2 部门回显列表；
         $.ajax({
-            url:"/hrms/dept/getDeptName",
+            url:"<%=request.getContextPath()%>/hrms/dept/getDeptName",
             type:"GET",
             success:function (result) {
                 if (result.code == 100){
@@ -119,7 +119,7 @@
 
         //5 点击更新按钮，发送AJAX请求到后台进行保存。
         $.ajax({
-            url:"/hrms/emp/updateEmp/"+updateEmpId,
+            url:"<%=request.getContextPath()%>/hrms/emp/updateEmp/"+updateEmpId,
             type:"PUT",
             data:$(".update_emp_form").serialize(),
             success:function (result) {
@@ -128,7 +128,7 @@
                     $(".emp-update-modal").modal("hide");
                     //跳转到当前页
                     var curPage = ${curPage};
-                    window.location.href="/hrms/emp/getEmpList?pageNo="+curPage;
+                    window.location.href="<%=request.getContextPath()%>/hrms/emp/getEmpList?pageNo="+curPage;
                 }else {
                     alert(result.extendInfo.emp_update_error);
                 }

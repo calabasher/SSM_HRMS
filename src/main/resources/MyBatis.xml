@@ -7,9 +7,12 @@
     <!-- 1. 数据源 : DriverManagerDataSource -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/ssm_hrms?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false"/>
+        <!-- <property name="url" value="jdbc:mysql://localhost:3306/ssm_hrms?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false"/>
+        -->
+         <property name="url" value="jdbc:mysql://192.168.10.24:3306/ssm_hrms?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false"/>
+       
         <property name="username" value="root"/>
-        <property name="password" value="920614"/>
+        <property name="password" value="123456"/>
     </bean>
 
     <!--

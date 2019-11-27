@@ -37,15 +37,15 @@
 </div><!-- /.modal -->
 
 <script type="text/javascript">
-    <!-- ==========================部门新增操作=================================== -->
+    <!-- 部门新增操作 -->
     // 为简单操作，省去了输入名称的验证、错误信息提示等操作
-    //1 点击部门新增按钮，弹出模态框；
-    //2 输入新增部门信息，点击保存按钮，发送AJAX请求到后台进行保存；
-    //3 保存成功跳转最后一页
+    // 1 点击部门新增按钮，弹出模态框；
+    // 2 输入新增部门信息，点击保存按钮，发送AJAX请求到后台进行保存；
+    // 3 保存成功跳转最后一页
     $(".dept_add_btn").click(function () {
         $('.dept-add-modal').modal({
-            backdrop:static,
-            keyboard:true
+            backdrop: static,
+            keyboard: true
         });
 
     });
@@ -55,7 +55,7 @@
         var deptLeader = $("#add_deptLeader").val();
         //验证省略...
         $.ajax({
-            url:"/hrms/dept/addDept",
+            url:"<%=request.getContextPath()%>/hrms/dept/addDept",
             type:"PUT",
             data:$(".add_dept_form").serialize(),
             success:function (result) {

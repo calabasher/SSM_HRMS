@@ -126,21 +126,19 @@
             $(this).attr("href", "/hrms/dept/getDeptList?pageNo="+pageNo);
         }
     });
-
-
-    <!-- ==========================部门删除操作=================================== -->
+    // 部门删除操作
     $(".dept_delete_btn").click(function () {
         var delDeptId = $(this).parent().parent().find("td:eq(0)").text();
         var delDeptName = $(this).parent().parent().find("td:eq(1)").text();
         var curPageNo = ${curPageNo};
         if (confirm("确认删除【"+ delDeptName +"】的信息吗？")){
             $.ajax({
-                url:"/hrms/dept/delDept/"+delDeptId,
+                url:"<%=request.getContextPath()%>/hrms/dept/delDept/"+delDeptId,
                 type:"DELETE",
                 success:function (result) {
                     if (result.code == 100){
                         alert("删除成功！");
-                        window.location.href = "/hrms/dept/getDeptList?pageNo="+curPageNo;
+                        window.location.href = "<%=request.getContextPath()%>/hrms/dept/getDeptList?pageNo="+curPageNo;
                     }else {
                         alert(result.extendInfo.del_dept_error);
                     }
