@@ -38,7 +38,7 @@ public class JsonMsg {
         this.extendInfo = extendInfo;
     }
     
-    //    静态方法，别人调用不需要声明
+    // 静态方法，别人调用不需要声明
     public static JsonMsg success(){
         JsonMsg res = new JsonMsg();
         res.setCode(100);

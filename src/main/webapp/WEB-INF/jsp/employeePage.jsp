@@ -14,7 +14,6 @@
 
         <!-- 左侧栏 -->
         <%@ include file="./commom/leftsidebar.jsp"%>
-
         <!-- 中间员工表格信息展示内容 -->
         <div class="emp_info col-sm-10">
 
@@ -26,6 +25,10 @@
                         <li class="active">员工信息</li>
                     </ol>
                 </div>
+                <div>
+					<input type="text" id="empId" />
+					<button class="submit">查詢</button>
+		        </div>
                 <!-- Table -->
                 <table class="table table-bordered table-hover" id="emp_table">
                     <thead>
@@ -42,7 +45,7 @@
                                 <td>${emp.empId}</td>
                                 <td>${emp.empName}</td>
                                 <td>${emp.empEmail}</td>
-                                <td>${emp.gender == "F"? "女": "男"}</td>
+                                <td>${emp.gender == 1 ? "女": "男"}</td>
                                 <td>${emp.department.deptName}</td>
                                 <td>
                                     <a href="#" role="button" class="btn btn-primary emp_edit_btn" data-toggle="modal" data-target=".emp-update-modal">编辑</a>
@@ -141,12 +144,12 @@
         var delEmpName = $(this).parent().parent().find("td:eq(1)").text();
         if (confirm("确认删除【" + delEmpName+ "】的信息吗？")){
             $.ajax({
-                url:"/hrms/emp/deleteEmp/"+delEmpId,
+                url:"<%=request.getContextPath()%>/hrms/emp/deleteEmp/"+delEmpId,
                 type:"DELETE",
                 success:function (result) {
                     if (result.code == 100){
                         alert("删除成功！");
-                        window.location.href="/hrms/emp/getEmpList?pageNo="+curPage;
+                        window.location.href="<%=request.getContextPath()%>/hrms/emp/getEmpList?pageNo="+curPage;
                     }else {
                         alert(result.extendInfo.emp_del_error);
                     }
@@ -154,7 +157,21 @@
             });
         }
     });
-
+	/* 查询 */
+	$(".submit").click(function(){
+		var empId = $("#empId").val();
+		$.ajax({
+            url: "<%=request.getContextPath()%>/hrms/emp/getEmpById/" + empId,
+            type: "GET",
+            success:function (result) {
+                if (result.code == 100){
+                    alert('成功')
+                }else {
+                    
+                }
+            }
+        });
+	})
 
 </script>
 </body>

@@ -25,7 +25,7 @@
             </ul>
         </li>
     </ul>
-	<ul class="nav nav-pills nav-stacked dept_sidebar">
+	<ul class="nav nav-pills nav-stacked task_sidebar">
         <li role="presentation" class="active">
             <a href="#"  data-toggle="collapse" data-target="#collapse_task">
                 <span class="glyphicon glyphicon-cloud" aria-hidden="true">任务管理</span>

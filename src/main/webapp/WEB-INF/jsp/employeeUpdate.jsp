@@ -73,7 +73,7 @@
             success:function (result) {
                 if (result.code == 100){
                     var emp = result.extendInfo.employee;
-                    $("#update_static_empName").text(emp.empName);
+                    $("#update_static_empName").val(emp.empName);
                     $("#update_empEmail").val(emp.empEmail);
                     $(".emp-update-modal input[name=gender]").val([emp.gender]);
                     $("#update_department").val(emp.departmentId);

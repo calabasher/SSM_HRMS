@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Service
 public class DepartmentService {
+	// 自动连线
     @Autowired
     DepartmentMapper departmentMapper;
 

@@ -18,7 +18,7 @@ public interface EmployeeMapper {
     /**
      * ================================= 删除 ============================================
      */
-    @Delete({"DELETE FROM", TABLE_NAME, "WHERE emp_id = #{empId}"})
+    //    @Delete({"DELETE FROM", TABLE_NAME, "WHERE emp_id = #{empId}"})
     int deleteOneById(@Param("empId") Integer empId);
     /**
      * ================================= 修改 ============================================
@@ -33,7 +33,7 @@ public interface EmployeeMapper {
                     "#{empEmail}, " +
                     "#{gender}, " +
                     "#{departmentId})"})
-    int insertOne(Employee employee);
+    int insertOne(Employee employee);	// 写谁头上就是谁的，写在xml文件，在集合存放的时候，用xml更灵活，xml可以循环，但是在mapper.java中则要调N次
 
     /**
      * =================================查询============================================

@@ -33,20 +33,20 @@
         emp_id = #{empId}
     </select>
 
-    <select id="selectOneByName" parameterType="String" resultType="com.hrms.bean.Employee">
+    <select id="selectOneByName" parameterType="String" resultMap="withDeptResultMap">
         SELECT
-        emp_id empId, emp_name empName, emp_email empEmail, gender, department_id departmentId
+        emp_id
         FROM
         <include refid="table_name"/>
         WHERE
         emp_name = #{empName}
     </select>
-
+	<!-- parameterType主要用于指定传入对象类型,如果不指定,会直接获取,接口参数,指定则是获取对象类的属性 -->
     <select id="selectWithDeptById" parameterType="Integer" resultMap="withDeptResultMap">
         SELECT
         <include refid="select_withdept_fields"/>
         FROM
-       tbl_emp e, tbl_dept d
+        tbl_emp e, tbl_dept d
         WHERE
         e.department_id = d.dept_id
         AND
@@ -70,10 +70,20 @@
         UPDATE
         <include refid="table_name"/>
         SET
+        emp_name = #{employee.empName, jdbcType = VARCHAR},
         emp_email = #{employee.empEmail, jdbcType = VARCHAR},
-        gender = #{employee.gender, jdbcType = VARCHAR},
+        gender = #{employee.gender, jdbcType = INTEGER},
         department_id = #{employee.departmentId, jdbcType = INTEGER}
         WHERE
         emp_id = #{empId, jdbcType = INTEGER}
     </update>
+    
+   	<!-- 删除 -->  
+	<delete id="deleteOneById" parameterType="com.hrms.bean.Employee">  
+	    DELETE 
+	    FROM 
+	    <include refid="table_name"/>
+	    WHERE 
+	    emp_id = #{empId, jdbcType = INTEGER}  
+	</delete>  
 </mapper>

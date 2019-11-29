@@ -34,6 +34,7 @@
                     <th>施工者</th>
                     <th>开始时间</th>
                     <th>结束时间</th>
+                    <th>状态</th>
                     <th>备注</th>
                     <th>操作</th>
                     </thead>
@@ -46,7 +47,7 @@
                                 <td>${item.createtime}</td>
                                 <td>${item.updatetime}</td>
                                 <!-- '0:已完成 1：进行中 2：已超时' -->
-                                <td>${item.status == 0 ? "已完成" :  " 进行"}</td>
+                                <td>${item.status == 0 ? "已完成" :  item.status == 1 ?  "进行中" :  '已超时'}</td>
                                 <td>${item.remarks}</td>
                                 <td>
                                     <a href="#" role="button" class="btn btn-primary emp_edit_btn" data-toggle="modal" data-target=".emp-update-modal">编辑</a>
@@ -114,8 +115,8 @@
     </div><!-- /.hrms_body -->
 </div><!-- /.container -->
 
-<%@ include file="employeeAdd.jsp"%>
-<%@ include file="employeeUpdate.jsp"%>
+<%@ include file="taskAdd.jsp"%>
+<%@ include file="taskUpdate.jsp"%>
 
 
 <script>

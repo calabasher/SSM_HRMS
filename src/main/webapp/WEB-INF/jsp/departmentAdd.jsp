@@ -63,12 +63,12 @@
                     alert("新增成功");
                     $('.dept-add-modal').modal("hide");
                     $.ajax({
-                        url:"/hrms/dept/getTotalPages",
+                        url:"<%=request.getContextPath()%>/hrms/dept/getTotalPages",
                         type:"GET",
                         success:function (result) {
                             if (result.code == 100){
                                 var totalPage = result.extendInfo.totalPages;
-                                window.location.href="/hrms/dept/getDeptList?pageNo="+totalPage;
+                                window.location.href="<%=request.getContextPath()%>/hrms/dept/getDeptList?pageNo="+totalPage;
                             }
                         }
                     });

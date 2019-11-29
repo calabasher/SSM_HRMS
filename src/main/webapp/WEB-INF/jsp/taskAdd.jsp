@@ -2,34 +2,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Employee Add Page</title>
+    <title>Task Add Page</title>
 </head>
 <body>
-<div class="modal fade emp-add-modal" tabindex="-1" role="dialog" aria-labelledby="emp-add-modal">
+<div class="modal fade task-add-modal" tabindex="-1" role="dialog" aria-labelledby="task-add-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">员工新增</h4>
+                <h4 class="modal-title">任务新增</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal add_emp_form">
+                <form class="form-horizontal add_task_form">
                     <div class="form-group">
-                        <label for="add_inputName" class="col-sm-2 control-label">姓名</label>
+                        <label for="add_inputName" class="col-sm-2 control-label">任务名</label>
                         <div class="col-sm-8">
-                            <input type="text" name="empName" class="form-control" id="add_inputName" placeholder="如：张三">
+                            <input type="text" name="taskName" class="form-control" id="add_inputName" placeholder="如：张三">
                             <span id="helpBlock_add_inputName" class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="add_inputEmail" class="col-sm-2 control-label">邮箱</label>
+                        <label for="add_department" class="col-sm-2 control-label">负责人</label>
                         <div class="col-sm-8">
-                            <input type="email" name="empEmail" class="form-control" id="add_inputEmail" placeholder="zs@qq.com">
-                            <span id="helpBlock_add_inputEmail" class="help-block"></span>
+                            <div class="checkbox">
+                                <select class="form-control" name="empId" id="add_empName">
+                                   <%-- <option value="1">CEO</option>--%>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">性别</label>
+                        <label class="col-sm-2 control-label">开始时间</label>
                         <div class="col-sm-8">
                             <label class="radio-inline">
                                 <input type="radio" checked="checked" name="gender" id="add_inputGender1" value="M"> 男
@@ -40,7 +43,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="add_department" class="col-sm-2 control-label">部门</label>
+                        <label for="add_department" class="col-sm-2 control-label">结束时间</label>
                         <div class="col-sm-8">
                             <div class="checkbox">
                                 <select class="form-control" name="departmentId" id="add_department">
@@ -53,7 +56,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary emp_save_btn">保存</button>
+                <button type="button" class="btn btn-primary task_save_btn">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -61,14 +64,12 @@
 
 
 <script type="text/javascript">
-
-    <!-------------------------------------员工新增操作-------------------------------------->
-    //=======0 点击 员工新增按钮，发送AJAX请求查询部门列表信息，弹出模态框，
+    <!-------------------------------------任务新增操作-------------------------------------->
+    //=======0 点击 任务新增按钮，发送AJAX请求查询部门列表信息，弹出模态框，
     // 将查询得到的部门列表信息显示在对应模态框中部门信息处。=============================
-    $(".emp_add_btn").click(function () {
-
+    $(".task_add_btn").click(function () {
         $.ajax({
-            url:"/hrms/dept/getDeptName",
+            url:"<%=request.getContextPath()%>/hrms/emp/getEmpList",
             type:"GET",
             success:function (result) {
                 if (result.code == 100){
@@ -79,46 +80,19 @@
                 }
             }
         });
-
-        $('.emp-add-modal').modal({
-            backdrop:static,
-            keyboard:true
-        });
-    });
-
-    //=========1 当鼠标从姓名输入框移开的时候，判断姓名输入框内的姓名是否重复 ============
-    $("#add_inputName").change(function () {
-        var empName = $("#add_inputName").val();
-        $.ajax({
-            url:"/hrms/emp/checkEmpExists",
-            type:"GET",
-            data:"empName="+empName,
-            success:function (result) {
-                if (result.code == 100){
-                    $("#add_inputName").parent().parent().removeClass("has-error");
-                    $("#add_inputName").parent().parent().addClass("has-success");
-                    $("#helpBlock_add_inputName").text("用户名可用！");
-                    $(".emp_save_btn").attr("btn_name_exists", "success");
-                }else {
-                    $("#add_inputName").parent().parent().removeClass("has-success");
-                    $("#add_inputName").parent().parent().addClass("has-error");
-                    $("#helpBlock_add_inputName").text(result.extendInfo.name_reg_error);
-                    $(".emp_save_btn").attr("btn_name_exists", "error");
-                }
-            }
+        $('.task-add-modal').modal({
+            backdrop: static,
+            keyboard: true
         });
     });
 
     //3 保存
-
-    $(".emp_save_btn").click(function () {
-
-        //1 获取到第3步：$(".emp_save_btn").attr("btn_name_exists", "success");中btn_name_exists的值
+    $(".task_save_btn").click(function () {
+        //1 获取到第3步：$(".task_save_btn").attr("btn_name_exists", "success");中btn_name_exists的值
         // btn_name_exists = error，就是姓名重复
-        if($(".emp_save_btn").attr("btn_name_exists") == "error"){
+        if($(".task_save_btn").attr("btn_name_exists") == "error"){
             return false;
         }
-
         //================2 对输入的姓名和邮箱格式进行验证===============
         var inputName = $("#add_inputName").val();
         var inputEmail = $("#add_inputEmail").val();
@@ -150,41 +124,29 @@
             $("#add_inputName").parent().parent().addClass("has-success");
             $("#helpBlock_add_inputEmail").hide();
         }
-
-
-
         $.ajax({
-            url:"/hrms/emp/addEmp",
+            url:"<%=request.getContextPath()%>/hrms/task/addTask",
             type:"POST",
-            data:$(".add_emp_form").serialize(),
+            data:$(".add_task_form").serialize(),
             success:function (result) {
                 if (result.code == 100){
-                    alert("员工新增成功");
-                    $('#emp-add-modal').modal("hide");
+                    alert("任务新增成功");
+                    $('#task-add-modal').modal("hide");
                     //跳往最后一页，由于新增记录，所以要重新查询总页数
                     $.ajax({
-                        url:"/hrms/emp/getTotalPages",
+                        url:"<%=request.getContextPath()%>/hrms/task/getTotalPages",
                         type:"GET",
                         success:function (result) {
                             var totalPage = result.extendInfo.totalPages;
-                            window.location.href="/hrms/emp/getEmpList?pageNo="+totalPage;
+                            window.location.href="/hrms/task/getTaskList?pageNo="+totalPage;
                         }
                     })
                 } else {
-                    alert("员工新增失败！");
+                    alert("任务新增失败！");
                 }
             }
-
         });
-
-
-
-
-
     });
-
-
-
 </script>
 </body>
 </html>

@@ -32,10 +32,10 @@ public class Department {
     public void setDeptName(String deptName) {
         this.deptName = deptName;
     }
-
+    //  无参构造方法， 当类中没有定义构造函数时，系统会指定给该类加上一个空参数的构造函数。这个是类中默认的构造函数。当类中如果自定义了构造函数，这时默认的构造函数就没有了
     public Department() {
     }
-
+    //  全参构造方法
     public Department(Integer deptId, String deptLeader, String deptName) {
         this.deptId = deptId;
         this.deptLeader = deptLeader;

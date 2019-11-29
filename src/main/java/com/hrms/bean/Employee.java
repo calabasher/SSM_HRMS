@@ -53,17 +53,17 @@ public class Employee {
         this.departmentId = departmentId;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "empId=" + empId +
-                ", empName='" + empName + '\'' +
-                ", empEmail='" + empEmail + '\'' +
-                ", gender='" + gender + '\'' +
-                ", departmentId=" + departmentId + '\'' +
-                ", department=" + department +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Employee{" +
+//                "empId=" + empId +
+//                ", empName='" + empName + '\'' +
+//                ", empEmail='" + empEmail + '\'' +
+//                ", gender='" + gender + '\'' +
+//                ", departmentId=" + departmentId + '\'' +
+//                ", department=" + department +
+//                '}';
+//    }
 
     public Employee() {
     }

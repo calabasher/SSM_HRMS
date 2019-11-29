@@ -32,10 +32,10 @@
                         <label class="col-sm-2 control-label">性别</label>
                         <div class="col-sm-8">
                             <label class="radio-inline">
-                                <input type="radio" checked="checked" name="gender" id="add_inputGender1" value="M"> 男
+                                <input type="radio" checked="checked" name="gender" id="add_inputGender1" value="0"> 男
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="gender" id="add_inputGender2" value="F"> 女
+                                <input type="radio" name="gender" id="add_inputGender2" value="1"> 女
                             </label>
                         </div>
                     </div>

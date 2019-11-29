@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrms.mapper.UserMapper">
+	<sql id="table_name">tbl_user</sql>
+	<select id="getUserInfoByUserName" resultType="com.hrms.bean.User">
+		select
+		user_id as userId, username as userName, password, createtime as createTime, role
+		from
+		<include refid="table_name"></include>
+		where
+		username = #{userName}
+	</select>
+</mapper>

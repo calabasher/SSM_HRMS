@@ -26,8 +26,12 @@ public class EmployeeService {
     public Employee getEmpById(Integer empId){
         return employeeMapper.selectOneById(empId);
     }
-    public Employee getEmpByName(String empName){return employeeMapper.selectOneByName(empName);};
-    public int updateEmpById(Integer empId, Employee employee){return employeeMapper.updateOneById(empId, employee);}
+    public Employee getEmpByName(String empName){
+    	return employeeMapper.selectOneByName(empName);
+    };
+    public int updateEmpById(Integer empId, Employee employee){
+    	return employeeMapper.updateOneById(empId, employee);
+    }
     public int deleteEmpById(Integer empId){
         return employeeMapper.deleteOneById(empId);
     }
